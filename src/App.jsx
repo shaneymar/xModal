@@ -1,17 +1,14 @@
 import "./App.css";
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 
 function App() {
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState({
-  username: "",
-  email: "",
-  phone: "",
-  dob: "",
+    username: "",
+    email: "",
+    phone: "",
+    dob: "",
   });
-
-
-const modalRef = useRef(null);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -22,61 +19,56 @@ const modalRef = useRef(null);
 
     const { username, email, phone, dob } = form;
 
-    
+    // ✅ Email validation FIRST (Cypress expects this)
+    if (email && !email.includes("@")) {
+      return alert("Invalid email. Please check your email address.");
+    }
+
+    // ✅ Phone validation
+    if (phone && !/^\d{10}$/.test(phone)) {
+      return alert(
+        "Invalid phone number. Please enter a 10-digit phone number."
+      );
+    }
+
+    // ✅ DOB validation
+    if (dob) {
+      const selectedDate = new Date(dob);
+      const today = new Date();
+      if (selectedDate > today) {
+        return alert("Invalid date of birth.");
+      }
+    }
+
+    // ✅ Empty field validation LAST
     if (!username) return alert("Please fill out the username field.");
     if (!email) return alert("Please fill out the email field.");
     if (!phone) return alert("Please fill out the phone field.");
     if (!dob) return alert("Please fill out the date of birth field.");
 
-    
-    if (!email.includes("@")) {
-      return alert("Invalid email. Please check your email address.");
-    }
-
-    
-    if (!/^\d{10}$/.test(phone)) {
-      return alert(
-        "Invalid phone number. Please enter a 10-digit phone number."
-      );
-    }
-
-    
-    const selectedDate = new Date(dob);
-    const today = new Date();
-    if (selectedDate > today) {
-      return alert(
-        "Invalid phone number. Please enter a 10-digit phone number."
-      );
-    }
-
-    
+    // ✅ Success
     setForm({ username: "", email: "", phone: "", dob: "" });
     setOpen(false);
   };
 
-  useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (modalRef.current && !modalRef.current.contains(e.target)) {
-        setOpen(false);
-      }
-    };
-
-    if (open) document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [open]);
-
   return (
-    <div>
-      
-      <div className="modal">
-        <h1>User Details Form</h1><br/>
-        {!open && <button onClick={() => setOpen(true)}>Open Form</button>}
+    <div className="modal">
+      <h1>User Details Form</h1>
+      {!open && <button onClick={() => setOpen(true)}>Open Form</button>}
 
-        {open && (
-          <div className="modal-content" ref={modalRef}>
+      {open && (
+        <div  onClick={() => setOpen(false)}>
+          
+          <br />
+
+          <div
+            className="modal-content"
+            onClick={(e) => e.stopPropagation()}
+          >
             <h2>Fill Details</h2>
-            <label>Username:</label>
+
             <form onSubmit={handleSubmit}>
+              <label>Username:</label>
               <input
                 id="username"
                 name="username"
@@ -117,8 +109,8 @@ const modalRef = useRef(null);
               </button>
             </form>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 }

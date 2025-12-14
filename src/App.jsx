@@ -19,19 +19,19 @@ function App() {
 
     const { username, email, phone, dob } = form;
 
-    // ✅ Email validation FIRST (Cypress expects this)
+    // Email validation
     if (email && !email.includes("@")) {
       return alert("Invalid email. Please check your email address.");
     }
 
-    // ✅ Phone validation
+    // Phone validation
     if (phone && !/^\d{10}$/.test(phone)) {
       return alert(
         "Invalid phone number. Please enter a 10-digit phone number."
       );
     }
 
-    // ✅ DOB validation
+    // Date of Birth validation
     if (dob) {
       const selectedDate = new Date(dob);
       const today = new Date();
@@ -40,78 +40,77 @@ function App() {
       }
     }
 
-    // ✅ Empty field validation LAST
+    // Empty field validation (LAST)
     if (!username) return alert("Please fill out the username field.");
     if (!email) return alert("Please fill out the email field.");
     if (!phone) return alert("Please fill out the phone field.");
     if (!dob) return alert("Please fill out the date of birth field.");
 
-    // ✅ Success
+    // Success
     setForm({ username: "", email: "", phone: "", dob: "" });
     setOpen(false);
   };
 
   return (
-  <div className="modal">
-    <h1>User Details Form</h1>
+    <div>
+      <h1>User Details Form</h1>
 
-    {!open && <button onClick={() => setOpen(true)}>Open Form</button>}
+      {!open && <button onClick={() => setOpen(true)}>Open Form</button>}
 
-    {open && (
-      <div className="modal" onClick={() => setOpen(false)}>
-        <div
-          className="modal-content"
-          onClick={(e) => e.stopPropagation()}
-        >
-          <h2>Fill Details</h2>
+      {open && (
+        <div className="modal" onClick={() => setOpen(false)}>
+          <div
+            className="modal-content"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h2>Fill Details</h2>
 
-          <form onSubmit={handleSubmit}>
-            <label>Username:</label>
-            <input
-              id="username"
-              name="username"
-              placeholder="Username"
-              value={form.username}
-              onChange={handleChange}
-            />
+            <form onSubmit={handleSubmit}>
+              <label>Username:</label>
+              <input
+                id="username"
+                name="username"
+                placeholder="Username"
+                value={form.username}
+                onChange={handleChange}
+              />
 
-            <label>Email:</label>
-            <input
-              id="email"
-              name="email"
-              placeholder="Email"
-              value={form.email}
-              onChange={handleChange}
-            />
+              <label>Email:</label>
+              <input
+                id="email"
+                name="email"
+                placeholder="Email"
+                value={form.email}
+                onChange={handleChange}
+              />
 
-            <label>Phone:</label>
-            <input
-              id="phone"
-              name="phone"
-              placeholder="Phone"
-              value={form.phone}
-              onChange={handleChange}
-            />
+              <label>Phone:</label>
+              <input
+                id="phone"
+                name="phone"
+                placeholder="Phone"
+                value={form.phone}
+                onChange={handleChange}
+              />
 
-            <label>Date of Birth:</label>
-            <input
-              id="dob"
-              type="date"
-              name="dob"
-              value={form.dob}
-              onChange={handleChange}
-            />
+              <label>Date of Birth:</label>
+              <input
+                id="dob"
+                type="date"
+                name="dob"
+                value={form.dob}
+                onChange={handleChange}
+              />
 
-            <button className="submit-button" type="submit">
-              Submit
-            </button>
-          </form>
+              <button className="submit-button" type="submit">
+                Submit
+              </button>
+            </form>
+          </div>
         </div>
-      </div>
-    )}
-  </div>
-);
-
+      )}
+    </div>
+  );
 }
 
 export default App;

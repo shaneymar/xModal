@@ -52,67 +52,66 @@ function App() {
   };
 
   return (
-    <div className="modal">
-      <h1>User Details Form</h1>
-      {!open && <button onClick={() => setOpen(true)}>Open Form</button>}
+  <div className="modal">
+    <h1>User Details Form</h1>
 
-      {open && (
-        <div  onClick={() => setOpen(false)}>
-          
-          <br />
+    {!open && <button onClick={() => setOpen(true)}>Open Form</button>}
 
-          <div
-            className="modal-content"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <h2>Fill Details</h2>
+    {open && (
+      <div className="modal" onClick={() => setOpen(false)}>
+        <div
+          className="modal-content"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <h2>Fill Details</h2>
 
-            <form onSubmit={handleSubmit}>
-              <label>Username:</label>
-              <input
-                id="username"
-                name="username"
-                placeholder="Username"
-                value={form.username}
-                onChange={handleChange}
-              />
+          <form onSubmit={handleSubmit}>
+            <label>Username:</label>
+            <input
+              id="username"
+              name="username"
+              placeholder="Username"
+              value={form.username}
+              onChange={handleChange}
+            />
 
-              <label>Email:</label>
-              <input
-                id="email"
-                name="email"
-                placeholder="Email"
-                value={form.email}
-                onChange={handleChange}
-              />
+            <label>Email:</label>
+            <input
+              id="email"
+              name="email"
+              placeholder="Email"
+              value={form.email}
+              onChange={handleChange}
+            />
 
-              <label>Phone:</label>
-              <input
-                id="phone"
-                name="phone"
-                placeholder="Phone"
-                value={form.phone}
-                onChange={handleChange}
-              />
+            <label>Phone:</label>
+            <input
+              id="phone"
+              name="phone"
+              placeholder="Phone"
+              value={form.phone}
+              onChange={handleChange}
+            />
 
-              <label>Date of Birth:</label>
-              <input
-                id="dob"
-                type="date"
-                name="dob"
-                value={form.dob}
-                onChange={handleChange}
-              />
+            <label>Date of Birth:</label>
+            <input
+              id="dob"
+              type="date"
+              name="dob"
+              value={form.dob}
+              onChange={handleChange}
+            />
 
-              <button className="submit-button" type="submit">
-                Submit
-              </button>
-            </form>
-          </div>
+            <button className="submit-button" type="submit">
+              Submit
+            </button>
+          </form>
         </div>
-      )}
-    </div>
-  );
+      </div>
+    )}
+  </div>
+);
+
 }
 
 export default App;
